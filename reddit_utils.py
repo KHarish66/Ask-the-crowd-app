@@ -1,12 +1,12 @@
 # reddit_utils.py
 import praw
-from config import REDDIT_CLIENT_ID, REDDIT_CLIENT_SECRET, REDDIT_USER_AGENT
+import streamlit as st
 
-# Initialize Reddit client
+# Initialize Reddit client using Streamlit secrets
 reddit = praw.Reddit(
-    client_id=REDDIT_CLIENT_ID,
-    client_secret=REDDIT_CLIENT_SECRET,
-    user_agent=REDDIT_USER_AGENT,
+    client_id=st.secrets["REDDIT_CLIENT_ID"],
+    client_secret=st.secrets["REDDIT_CLIENT_SECRET"],
+    user_agent=st.secrets["REDDIT_USER_AGENT"],
 )
 
 def extract_post_id(url):
