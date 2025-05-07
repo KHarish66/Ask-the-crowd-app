@@ -1,14 +1,20 @@
-# google_search.py
-from googleapiclient.discovery import build
-from config import GOOGLE_API_KEY, GOOGLE_CSE_ID
+import requests
+import streamlit as st
 
-def search_reddit_threads(query, max_results=5):
-    service = build("customsearch", "v1", developerKey=GOOGLE_API_KEY)
-    result = service.cse().list(q=f"{query} site:reddit.com", cx=GOOGLE_CSE_ID).execute()
+def search_reddit_threads(query, num_results=5):
+    api_key = st.secrets["GOOGLE_API_KEY"]
+    cse_id = st.secrets["GOOGLE_CSE_ID"]
 
-    links = []
-    for item in result.get('items', [])[:max_results]:
-        if "reddit.com/r/" in item["link"]:
-            links.append(item["link"].split("?")[0])  # clean URL
+    search_url = "https://customsearch.googleapis.com/customsearch/v1"
+    params = {
+        "q": f"{query} site:reddit.com",
+        "key": api_key,
+        "cx": cse_id,
+        "num": num_results,
+    }
 
-    return links
+    response = requests.get(search_url, params=params)
+    response.raise_for_status()
+    results = response.json()
+
+    return [item["link"] for item in results.get("items", [])]
