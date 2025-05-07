@@ -1,7 +1,7 @@
 # Ask-the-crowd
-# 🧠 Ask the crowd — Extract Real Insights from Reddit Discussions
+# Ask the crowd — Extract Real Insights from Reddit Discussions
 
-## ❓ Problem
+## Problem
 
 The modern internet is saturated with:
 - SEO-optimized articles,
